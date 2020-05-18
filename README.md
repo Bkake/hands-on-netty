@@ -1,6 +1,6 @@
 # Hands-on Netty
 
-Cette mise en pratique a pour objectif de fournir introduction à la programmation réseau asynchrone 
+Cette mise en pratique a pour objectif de présenter les fonctionnalités de base de la programmation réseau asynchrone 
 avec le framework Netty.
 
 

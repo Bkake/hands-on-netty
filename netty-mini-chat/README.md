@@ -8,7 +8,7 @@ L'objectif est la mise en pratique de la création d'une application serveur bas
 ## Fonctionnalités
 * Génération d'un login fictif via l'id de l'adresse ip du client netcat
 * Un client netcat peut envoyer un message à tout les autres clients netcat connectés
-* Un client netcat peut envoyé un message un client particulier en utilisant le login du client
+* Un client netcat peut envoyé un message à un client particulier en utilisant le login du client
 
 ## Comment utiliser 
 
@@ -40,7 +40,8 @@ L'objectif est la mise en pratique de la création d'une application serveur bas
     CodeWorkers-50794>
 ```
 
-* A partir de maintenant, vous pouvez envoyer un message à tous les clients en `BroadCast` à partir du `CodeWorkers-50792`
+* A partir de maintenant, vous pouvez envoyer un message à tous les clients
+ en `BroadCast` à partir du `CodeWorkers-50792`
 ```
     CodeWorkers-50792>Hello CodeWorkers
 ```
