@@ -21,17 +21,23 @@ public class ChatUseCase {
     private static final Logger LOGGER = Logger.getLogger(ChatUseCase.class.getName());
 
     public void process(Request request) {
+        var message  = request.messageIn();
+        var userName = request.username();
+        var channelCache = request.channelCache();
+
         if (isBroadCast.test(request.messageIn())) {
-            oneToMany(request.messageIn(), request.username(), request.channelCache());
+            oneToMany(message, userName, channelCache);
         } else {
-            oneToOne(request.context(), request.messageIn(), request.channelCache());
+            oneToOne(request.context(), message, userName, channelCache);
         }
 
         buildPrompt.accept(request.context().channel(), request.username());
     }
 
 
-    private void oneToMany(String in, String userName, ConcurrentMap<String, Channel> channelCache) {
+    private void oneToMany(String in,
+                           String userName,
+                           ConcurrentMap<String, Channel> channelCache) {
         LOGGER.info("Broad Cast message ");
 
         channelCache.entrySet().stream()
@@ -42,13 +48,16 @@ public class ChatUseCase {
                 });
     }
 
-    private void oneToOne(ChannelHandlerContext ctx, String in, ConcurrentMap<String, Channel> channelCache) {
+    private void oneToOne(ChannelHandlerContext ctx,
+                          String in,
+                          String userName,
+                          ConcurrentMap<String, Channel> channelCache) {
             var splitIn = Pattern.compile(MSG_SEPARATOR).splitAsStream(in).collect(Collectors.toList());
             var targetUserName = splitIn.get(0);
             var targetChannel = channelCache.get(targetUserName);
 
             if (nonNull(targetChannel)) {
-                targetChannel.writeAndFlush(buildMessage.apply(targetUserName, splitIn.get(1)));
+                targetChannel.writeAndFlush(buildMessage.apply(userName, splitIn.get(1)));
                 buildPrompt.accept(targetChannel, targetUserName);
             } else {
                 ctx.channel().writeAndFlush("No user named with ["+ targetUserName +"].\r\n");

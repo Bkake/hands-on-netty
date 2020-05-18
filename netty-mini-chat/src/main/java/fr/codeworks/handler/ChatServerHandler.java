@@ -16,7 +16,7 @@ import static fr.codeworks.tools.ChatTool.getUserName;
 public class ChatServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger LOGGER = Logger.getLogger(ChatServerHandler.class.getName());
 
-    private static ConcurrentMap<String, Channel> channelCache = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<String, Channel> channelCache = new ConcurrentHashMap<>();
 
 
     @Override
@@ -45,6 +45,5 @@ public class ChatServerHandler extends ChannelInboundHandlerAdapter {
         LOGGER.warning(cause.getMessage());
         ctx.close();
     }
-
 
 }
